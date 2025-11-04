@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import supabase from '../lib/supabaseClient'
 
 export default function Gallery(){
   const [photos, setPhotos] = useState([])
@@ -10,11 +9,13 @@ export default function Gallery(){
   async function fetchPhotos(){
     setLoading(true)
     try{
-      const { data, error } = await supabase.from('photos').select('*').order('created_at', { ascending: false }).limit(100)
-      if(error) throw error
-      setPhotos(data || [])
+      const res = await fetch('/api/photos')
+      if(!res.ok) throw new Error('failed to load')
+      const json = await res.json()
+      setPhotos(json.data || [])
     }catch(e){
       console.error(e)
+      setPhotos([])
     }finally{ setLoading(false) }
   }
 
@@ -29,8 +30,7 @@ export default function Gallery(){
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {photos.map(p=> (
               <figure key={p.id} className="bg-gray-100 rounded overflow-hidden">
-                {/* Use public URL from Supabase storage */}
-                <img src={supabase.storage.from('photos').getPublicUrl(p.storage_path).data.publicUrl} alt={p.caption || p.filename} className="w-full h-56 object-cover" />
+                <img src={p.publicUrl || '/placeholder.png'} alt={p.caption || p.filename} className="w-full h-56 object-cover" />
                 <figcaption className="p-2 text-sm text-gray-700">
                   <div className="font-medium">{p.caption || p.filename}</div>
                   <div className="text-xs text-gray-500">{p.photographer || p.source}</div>

@@ -58,6 +58,16 @@ Despliegue en Vercel
 - Crea proyecto en Vercel apuntando a este repo.
 - Define las variables de entorno en Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY` (si lo necesitas para serverless scripts) y `ADMIN_PASSWORD`.
 
+Pasos adicionales importantes para Vercel (si encuentras el error "No matching version found for tailwindcss@3.5.4"):
+
+- Asegúrate de que el proyecto use `npm` y no otro gestor en la configuración de Vercel: en Settings → Build & Development Settings pon `Install Command` a `npm install`.
+- `package-lock.json` está comiteado en este repo para fijar versiones; si Vercel sigue intentando instalar una versión inexistente, fuerza un redeploy con caché limpio:
+	- En Vercel: Project → Deployments → selecciona el último Deploy → Redeploy → marca "Clear cache and redeploy" (o similar).
+	- Eso obliga a Vercel a volver a descargar dependencias respetando el `package-lock.json` en el repo.
+- Si usas otro gestor (pnpm/yarn) asegúrate de comitear el lockfile correspondiente o cambiar el gestor en Vercel.
+
+Si necesitas, puedo hacer el redeploy por ti (necesitaría acceso a tu cuenta Vercel) o guiarte paso a paso.
+
 Notas y seguridad
 
 - Este scaffold incluye un admin mínimo basado en una contraseña env var y cookies simples. Para producción recomienda usar Supabase Auth y RLS.
