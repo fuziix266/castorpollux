@@ -14,3 +14,6 @@ material/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Don’t commit Supabase notes/keys
+supabase.md
