@@ -5,13 +5,20 @@ export default async function handler(req, res) {
 
   try {
     const supabase = getSupabaseAdmin()
-    const { data, error } = await supabase.from('photos').select('*').order('created_at', { ascending: false }).limit(500)
+    
+    // Fetch photos with gallery information
+    const { data, error } = await supabase
+      .from('photos')
+      .select('*, galleries(*)')
+      .order('created_at', { ascending: false })
+      .limit(500)
+      
     if (error) {
       console.error('supabase photos error', error)
       return res.status(500).json({ error: String(error) })
     }
 
-    // For each photo, try to build a publicUrl using storage (if possible)
+    // For each photo, build publicUrl from storage
     const photos = await Promise.all((data || []).map(async (p) => {
       let publicUrl = ''
       try {

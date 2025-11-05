@@ -17,3 +17,4 @@ Thumbs.db
 
 # Don’t commit Supabase notes/keys
 supabase.md
+.vercel
