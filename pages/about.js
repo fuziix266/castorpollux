@@ -1,5 +1,6 @@
 ﻿import Head from 'next/head'
 import Link from 'next/link'
+import { getSupabaseAdmin } from '../lib/supabaseServer'
 
 export default function About({ settings, membersCount }) {
   return (
@@ -20,7 +21,6 @@ export default function About({ settings, membersCount }) {
 }
 
 export async function getServerSideProps() {
-  const { getSupabaseAdmin } = require('../lib/supabaseServer')
   const supabase = getSupabaseAdmin()
   const { count: membersCount } = await supabase
     .from('members')

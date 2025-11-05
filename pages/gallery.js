@@ -1,5 +1,6 @@
 ﻿import Head from 'next/head'
 import Link from 'next/link'
+import { getSupabaseAdmin } from '../lib/supabaseServer'
 
 export default function Gallery({ photos }) {
   return (
@@ -28,7 +29,6 @@ export default function Gallery({ photos }) {
 }
 
 export async function getServerSideProps() {
-  const { getSupabaseAdmin } = require('../lib/supabaseServer')
   const supabase = getSupabaseAdmin()
   const { data: photos } = await supabase
     .from('photos')

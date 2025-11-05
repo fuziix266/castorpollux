@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { getSupabaseAdmin } from '../../lib/supabaseServer'
 
 export default function BlogPost({ post }) {
   const router = useRouter()
@@ -161,7 +162,6 @@ export default function BlogPost({ post }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const { getSupabaseAdmin } = require('../../lib/supabaseServer')
   const supabase = getSupabaseAdmin()
 
   const { data: post } = await supabase

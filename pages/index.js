@@ -1,5 +1,6 @@
 ﻿import Head from 'next/head'
 import Link from 'next/link'
+import { getSupabaseAdmin } from '../lib/supabaseServer'
 
 export default function Home({ news, events, posts, stats }) {
   return (
@@ -104,7 +105,6 @@ export default function Home({ news, events, posts, stats }) {
 }
 
 export async function getServerSideProps() {
-  const { getSupabaseAdmin } = require('../lib/supabaseServer')
   const supabase = getSupabaseAdmin()
 
   const { data: news } = await supabase
