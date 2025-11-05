@@ -43,11 +43,47 @@ export default function Home({ news, events, posts, stats }) {
                 <Link href="/blog" className="text-slate-300 text-sm hover:text-[#D4AF37]">Blog</Link>
                 <Link href="/gallery" className="text-slate-300 text-sm hover:text-[#D4AF37]">Galería</Link>
                 <Link href="/about" className="text-slate-300 text-sm hover:text-[#D4AF37]">Nosotros</Link>
+                <Link href="/admin/login" className="text-slate-400 hover:text-[#D4AF37] transition-colors" title="Panel de Administración">
+                  <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </Link>
               </div>
             </header>
 
             <main className="flex-1 py-20">
               <div className="text-center mb-16">
+                <div className="flex justify-center mb-6">
+                  <svg className="w-64 h-24 text-[#D4AF37]" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Estrella Cástor (izquierda) */}
+                    <g className="animate-pulse" style={{ animationDuration: '3s' }}>
+                      <circle cx="100" cy="60" r="8" fill="currentColor" opacity="0.3"/>
+                      <circle cx="100" cy="60" r="5" fill="currentColor"/>
+                      <path d="M100 35 L105 50 L120 52 L110 62 L112 77 L100 70 L88 77 L90 62 L80 52 L95 50 Z" fill="currentColor" stroke="currentColor" strokeWidth="1"/>
+                      <line x1="100" y1="35" x2="100" y2="25" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="120" y1="52" x2="127" y2="47" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="112" y1="77" x2="115" y2="87" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="88" y1="77" x2="85" y2="87" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="80" y1="52" x2="73" y2="47" stroke="currentColor" strokeWidth="2"/>
+                    </g>
+                    
+                    {/* Línea de conexión */}
+                    <line x1="120" y1="60" x2="280" y2="60" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" opacity="0.4"/>
+                    
+                    {/* Estrella Póllux (derecha) */}
+                    <g className="animate-pulse" style={{ animationDuration: '3s', animationDelay: '1.5s' }}>
+                      <circle cx="300" cy="60" r="10" fill="currentColor" opacity="0.3"/>
+                      <circle cx="300" cy="60" r="6" fill="currentColor"/>
+                      <path d="M300 30 L306 48 L325 50 L312 62 L315 81 L300 72 L285 81 L288 62 L275 50 L294 48 Z" fill="currentColor" stroke="currentColor" strokeWidth="1"/>
+                      <line x1="300" y1="30" x2="300" y2="18" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="325" y1="50" x2="335" y2="43" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="315" y1="81" x2="320" y2="93" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="285" y1="81" x2="280" y2="93" stroke="currentColor" strokeWidth="2"/>
+                      <line x1="275" y1="50" x2="265" y2="43" stroke="currentColor" strokeWidth="2"/>
+                    </g>
+                  </svg>
+                </div>
                 <h1 className="text-white text-5xl md:text-7xl font-bold font-display mb-6 text-glow">
                   Una Odisea Cósmica
                 </h1>
