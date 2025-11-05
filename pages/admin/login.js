@@ -37,68 +37,87 @@ export default function AdminLogin() {
   return (
     <>
       <Head>
-        <title>Admin - Cástor & Póllux</title>
+        <title>Admin Login - Cástor & Póllux</title>
+        <html className="dark" />
+        <style>{`
+          body {
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+        `}</style>
       </Head>
       
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center px-4">
-        <div className="max-w-md w-full space-y-8 bg-white/10 backdrop-blur-lg p-10 rounded-2xl shadow-2xl border border-white/20">
-          {/* Logo / Header */}
-          <div className="text-center">
-            <div className="mx-auto h-20 w-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4">
-              <svg className="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            </div>
-            <h2 className="text-3xl font-bold text-white">Panel de Administración</h2>
-            <p className="mt-2 text-sm text-gray-300">Cástor & Póllux</p>
+      <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-dark/80 dark:bg-background-dark/80 p-4 font-display">
+        <div className="layout-container flex w-full max-w-md flex-col items-center justify-center">
+          {/* Header */}
+          <div className="flex flex-col items-center text-center mb-8">
+            <span className="material-symbols-outlined text-white text-5xl mb-2">
+              rocket_launch
+            </span>
+            <h1 className="text-white tracking-light text-[32px] font-bold leading-tight">
+              Cástor & Póllux - Admin Panel
+            </h1>
           </div>
 
-          {/* Formulario */}
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none relative block w-full px-4 py-3 border border-gray-300/30 placeholder-gray-400 text-white bg-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent backdrop-blur-sm"
-                placeholder="Contraseña de administrador"
-              />
-            </div>
+          {/* Login Card */}
+          <div className="w-full rounded-xl bg-[#1d1c27]/80 dark:bg-[#1d1c27]/80 backdrop-blur-sm border border-[#3f3b54] p-8 shadow-2xl">
+            <div className="flex flex-col w-full">
+              <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] text-center pb-8">
+                Administrator Login
+              </h2>
+              
+              <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6">
+                {/* Password Input */}
+                <label className="flex flex-col w-full">
+                  <p className="text-white/90 text-base font-medium leading-normal pb-2">Password</p>
+                  <div className="relative flex w-full items-center">
+                    <span className="material-symbols-outlined text-[#a19db9] absolute left-4">lock</span>
+                    <input
+                      className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary-admin/50 border border-[#3f3b54] bg-admin-dark focus:border-primary-admin h-14 placeholder:text-[#a19db9] pl-12 pr-4 py-3 text-base font-normal leading-normal"
+                      placeholder="Enter your password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </label>
 
-            {error && (
-              <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
-                {error}
+                {/* Error Message */}
+                {error && (
+                  <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
+                    {error}
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <div className="mt-2">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary-admin text-white hover:bg-primary-admin/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#1d1c27] focus:ring-primary-admin transition-all duration-200 text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (
+                      <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    ) : (
+                      <span className="truncate">Log In</span>
+                    )}
+                  </button>
+                </div>
+              </form>
+
+              {/* Back Link */}
+              <div className="mt-6 text-center">
+                <a href="/" className="text-sm text-[#a19db9] hover:text-white hover:underline focus:outline-none focus:underline">
+                  ← Back to main site
+                </a>
               </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            >
-              {loading ? (
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              ) : (
-                'Iniciar Sesión'
-              )}
-            </button>
-          </form>
-
-          {/* Link de regreso */}
-          <div className="text-center">
-            <a href="/" className="text-sm text-gray-300 hover:text-white transition-colors">
-              ← Volver al sitio principal
-            </a>
+            </div>
           </div>
         </div>
       </div>

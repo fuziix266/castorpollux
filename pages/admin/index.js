@@ -1,178 +1,158 @@
 import { checkAdminAuth } from '../../lib/adminAuth'
 import AdminLayout from '../../components/AdminLayout'
+import Link from 'next/link'
 
 export default function AdminDashboard({ stats }) {
   return (
     <AdminLayout title="Dashboard">
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <StatCard
-          title="Posts"
-          value={stats.posts}
-          icon="📝"
-          color="from-blue-500 to-blue-600"
-          href="/admin/posts"
-        />
-        <StatCard
-          title="Noticias"
-          value={stats.news}
-          icon="📰"
-          color="from-green-500 to-green-600"
-          href="/admin/news"
-        />
-        <StatCard
-          title="Eventos"
-          value={stats.events}
-          icon="📅"
-          color="from-purple-500 to-purple-600"
-          href="/admin/events"
-        />
-        <StatCard
-          title="Fotos"
-          value={stats.photos}
-          icon="🖼️"
-          color="from-pink-500 to-pink-600"
-          href="/admin/galleries"
-        />
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Posts */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <span className="text-2xl mr-2">📝</span>
-            Posts Recientes
-          </h2>
-          <div className="space-y-3">
-            {stats.recentPosts.length > 0 ? (
-              stats.recentPosts.map((post) => (
-                <div key={post.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
-                  <div className="flex-1">
-                    <h3 className="font-medium text-gray-800">{post.title}</h3>
-                    <p className="text-sm text-gray-500">
-                      {post.published ? '✅ Publicado' : '📝 Borrador'}
-                    </p>
-                  </div>
-                  <a
-                    href={`/admin/posts/${post.id}`}
-                    className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-                  >
-                    Editar →
-                  </a>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500 text-center py-8">No hay posts aún</p>
-            )}
-          </div>
-          <a
-            href="/admin/posts"
-            className="mt-4 block text-center text-indigo-600 hover:text-indigo-800 font-medium"
-          >
-            Ver todos los posts →
-          </a>
-        </div>
-
-        {/* Recent Events */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <span className="text-2xl mr-2">📅</span>
-            Próximos Eventos
-          </h2>
-          <div className="space-y-3">
-            {stats.upcomingEvents.length > 0 ? (
-              stats.upcomingEvents.map((event) => (
-                <div key={event.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
-                  <div className="flex-1">
-                    <h3 className="font-medium text-gray-800">{event.title}</h3>
-                    <p className="text-sm text-gray-500">
-                      {new Date(event.event_date).toLocaleDateString('es-CL')}
-                    </p>
-                  </div>
-                  <a
-                    href={`/admin/events/${event.id}`}
-                    className="text-purple-600 hover:text-purple-800 text-sm font-medium"
-                  >
-                    Editar →
-                  </a>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500 text-center py-8">No hay eventos próximos</p>
-            )}
-          </div>
-          <a
-            href="/admin/events"
-            className="mt-4 block text-center text-purple-600 hover:text-purple-800 font-medium"
-          >
-            Ver todos los eventos →
-          </a>
+      {/* PageHeading */}
+      <div className="flex flex-wrap justify-between gap-3 mb-8">
+        <div className="flex min-w-72 flex-col gap-2">
+          <p className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Welcome, Admin!</p>
+          <p className="text-[#a19db9] text-base font-normal leading-normal">
+            Here's a quick overview of your website's recent activity.
+          </p>
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="mt-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Acciones Rápidas</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <QuickActionCard
-            title="Nuevo Post"
-            description="Crear un nuevo artículo para el blog"
-            icon="📝"
-            href="/admin/posts/new"
-            color="bg-blue-500"
-          />
-          <QuickActionCard
-            title="Nueva Noticia"
-            description="Publicar una noticia destacada"
-            icon="📰"
-            href="/admin/news/new"
-            color="bg-green-500"
-          />
-          <QuickActionCard
-            title="Nuevo Evento"
-            description="Crear un evento astronómico"
-            icon="📅"
-            href="/admin/events/new"
-            color="bg-purple-500"
-          />
+      {/* Content Grid */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          {/* Recent Posts Card */}
+          <div className="flex flex-col rounded-xl bg-admin-darker border border-slate-200/10 p-6 mb-8">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <p className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Recent Blog Posts</p>
+              <Link
+                href="/admin/posts"
+                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-primary-admin text-white text-sm font-medium leading-normal hover:bg-primary-admin/90"
+              >
+                <span className="truncate">Manage all posts</span>
+              </Link>
+            </div>
+            <div className="flex flex-col divide-y divide-slate-200/10">
+              {stats.recentPosts.length > 0 ? (
+                stats.recentPosts.map((post) => (
+                  <div key={post.id} className="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="text-white flex items-center justify-center rounded-lg bg-[#2b2839] shrink-0 size-12">
+                        <span className="material-symbols-outlined">article</span>
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <p className="text-white text-base font-medium leading-normal line-clamp-1">{post.title}</p>
+                        <p className="text-[#a19db9] text-sm font-normal leading-normal line-clamp-2">
+                          {new Date(post.created_at).toLocaleDateString('es-CL')}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="shrink-0">
+                      <p className="text-[#a19db9] text-sm font-normal leading-normal">
+                        {post.published ? 'Published' : 'Draft'}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-12 text-[#a19db9]">
+                  <span className="material-symbols-outlined text-4xl mb-2 block">article</span>
+                  <p>No posts yet</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Recent News Card */}
+          <div className="flex flex-col rounded-xl bg-admin-darker border border-slate-200/10 p-6">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <p className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Recent News</p>
+              <Link
+                href="/admin/news"
+                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-primary-admin text-white text-sm font-medium leading-normal hover:bg-primary-admin/90"
+              >
+                <span className="truncate">Manage all news</span>
+              </Link>
+            </div>
+            <div className="flex flex-col divide-y divide-slate-200/10">
+              {stats.recentNews.length > 0 ? (
+                stats.recentNews.map((news) => (
+                  <div key={news.id} className="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="text-white flex items-center justify-center rounded-lg bg-[#2b2839] shrink-0 size-12">
+                        <span className="material-symbols-outlined">newspaper</span>
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <p className="text-white text-base font-medium leading-normal line-clamp-1">{news.title}</p>
+                        <p className="text-[#a19db9] text-sm font-normal leading-normal line-clamp-2">
+                          {new Date(news.created_at).toLocaleDateString('es-CL')}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="shrink-0">
+                      <p className="text-[#a19db9] text-sm font-normal leading-normal">
+                        {news.published ? 'Published' : 'Draft'}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-12 text-[#a19db9]">
+                  <span className="material-symbols-outlined text-4xl mb-2 block">newspaper</span>
+                  <p>No news yet</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="flex flex-col gap-6">
+          {/* Stats Card */}
+          <div className="flex flex-col rounded-xl bg-admin-darker border border-slate-200/10 p-6">
+            <p className="text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Quick Stats</p>
+            <div className="flex flex-col gap-4">
+              <StatsItem icon="article" label="Total Posts" value={stats.posts} />
+              <StatsItem icon="newspaper" label="Total News" value={stats.news} />
+              <StatsItem icon="event" label="Upcoming Events" value={stats.events} />
+              <StatsItem icon="photo_library" label="Photos" value={stats.photos} />
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex flex-col rounded-xl bg-admin-darker border border-slate-200/10 p-6">
+            <p className="text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Quick Actions</p>
+            <div className="flex flex-col gap-2">
+              <QuickActionButton href="/admin/posts/new" icon="add" label="New Post" />
+              <QuickActionButton href="/admin/news/new" icon="add" label="New News" />
+              <QuickActionButton href="/admin/events/new" icon="add" label="New Event" />
+              <QuickActionButton href="/admin/galleries" icon="photo_library" label="Manage Gallery" />
+            </div>
+          </div>
         </div>
       </div>
     </AdminLayout>
   )
 }
 
-function StatCard({ title, value, icon, color, href }) {
+function StatsItem({ icon, label, value }) {
   return (
-    <a
-      href={href}
-      className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow"
-    >
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-gray-600 mb-1">{title}</p>
-          <p className="text-3xl font-bold text-gray-800">{value}</p>
-        </div>
-        <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${color} flex items-center justify-center`}>
-          <span className="text-3xl">{icon}</span>
-        </div>
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <span className="material-symbols-outlined text-primary-admin">{icon}</span>
+        <p className="text-[#a19db9] text-sm font-normal leading-normal">{label}</p>
       </div>
-    </a>
+      <p className="text-white text-lg font-bold">{value}</p>
+    </div>
   )
 }
 
-function QuickActionCard({ title, description, icon, href, color }) {
+function QuickActionButton({ href, icon, label }) {
   return (
-    <a
+    <Link
       href={href}
-      className="block bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all hover:-translate-y-1"
+      className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#2b2839] hover:bg-[#3b3849] text-white transition-colors"
     >
-      <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-4`}>
-        <span className="text-2xl">{icon}</span>
-      </div>
-      <h3 className="font-bold text-gray-800 mb-2">{title}</h3>
-      <p className="text-sm text-gray-600">{description}</p>
-    </a>
+      <span className="material-symbols-outlined">{icon}</span>
+      <p className="text-sm font-medium leading-normal">{label}</p>
+    </Link>
   )
 }
 
@@ -217,7 +197,14 @@ export async function getServerSideProps(context) {
     // Posts recientes
     const { data: recentPosts } = await supabase
       .from('posts')
-      .select('id, title, published')
+      .select('id, title, published, created_at')
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    // Noticias recientes
+    const { data: recentNews } = await supabase
+      .from('news')
+      .select('id, title, published, created_at')
       .order('created_at', { ascending: false })
       .limit(5)
 
@@ -237,6 +224,7 @@ export async function getServerSideProps(context) {
           events: eventsCount || 0,
           photos: photosCount || 0,
           recentPosts: recentPosts || [],
+          recentNews: recentNews || [],
           upcomingEvents: upcomingEvents || [],
         },
       },
@@ -251,6 +239,7 @@ export async function getServerSideProps(context) {
           events: 0,
           photos: 0,
           recentPosts: [],
+          recentNews: [],
           upcomingEvents: [],
         },
       },
